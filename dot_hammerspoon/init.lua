@@ -81,4 +81,21 @@ end
 watcher = hs.caffeinate.watcher.new(bluetoothHandler)
 watcher:start()
 
+function openPrivateWindow() 
+  local firefox = hs.application('Firefox')
+  firefox:selectMenuItem('New Private Window')
+  firefox:activate()
+  local ws = firefox:allWindows()
+  for key, val in pairs(ws) do
+    print(hs.inspect(val))
+    if val:title() == 'Mozilla Firefox — Private Browsing' then
+      val:focus()
+      break
+    end
+  end
+end
+hs.hotkey.bind(mash, 'p', openPrivateWindow)
+
+hs.hotkey.bind(mash, "\\", function() yabai({"-m", "window", "--toggle", "split"}) end)
+
 hs.alert.show("Config updated!")
